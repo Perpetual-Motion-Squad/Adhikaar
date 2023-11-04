@@ -22,6 +22,7 @@ const AddUser = () => {
             console.log(res);
         }).catch((err) => {
             console.log(err.response.data);
+            console.log("HERE")
         }).finally(() => {
             setInput({});
             router.refresh();
