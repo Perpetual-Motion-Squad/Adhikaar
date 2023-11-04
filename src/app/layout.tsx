@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import { GeistSans, GeistMono } from "geist/font";
 import Web3ProviderModal from "./components/Web3ProviderModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "VoteKero",
@@ -20,6 +22,7 @@ export default function RootLayout({
           className={`bg-background-50 font-sans text-text-900 ${GeistSans.variable} ${GeistMono.variable}`}
         >
           {children}
+          <ToastContainer />
         </body>
       </Web3ProviderModal>
     </html>

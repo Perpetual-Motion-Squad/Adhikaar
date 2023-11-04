@@ -1,8 +1,63 @@
 "use client";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const sendOtp = async (phone: string) => {
+  const res = await fetch("/api/auth/send-otp", {
+    method: "POST",
+    body: JSON.stringify({ mobile: "+91" + phone }),
+  });
+  const data = await res.json();
+  return data;
+};
+
+const verifyOtp = async (phone: string, otp: string) => {
+  const res = await fetch("/api/auth/verify-otp", {
+    method: "POST",
+    body: JSON.stringify({ mobile: "+91" + phone, code: otp }),
+  });
+  const data = await res.json();
+  return data;
+};
 
 const PhoneAuth = () => {
   const [sentOtp, setSentOtp] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+
+  const [verficationStatus, setVerificationStatus] = useState<
+    "pending" | "approved" | "error"
+  >("pending");
+
+  const handleSendOtp = async () => {
+    setSentOtp(true);
+    await sendOtp(phoneNumber);
+    toast.success("OTP sent to your phone!");
+  };
+
+  const handleVerifyOtp = async () => {
+    const res = await verifyOtp(phoneNumber, otp);
+    setVerificationStatus(res.status);
+  };
+
+  const router = useRouter();
+  useEffect(() => {
+    if (verficationStatus === "approved") {
+      toast.success("Login approved, Welcome!");
+      (async () =>
+        await sleep(3000).then(() => {
+          router.push("/dashboard");
+        }))();
+    } else if (verficationStatus === "error") {
+      toast.error("Login failed, please try again!");
+      setSentOtp(false);
+      setVerificationStatus("pending");
+    }
+  }, [verficationStatus]);
+
   return (
     <div className="flex">
       <img src="/images/phone_connect_bg.jpg" className="h-screen" />
@@ -21,25 +76,32 @@ const PhoneAuth = () => {
             {sentOtp ? (
               <>
                 <input
-                  className="w-full rounded-lg bg-zinc-300/30 p-2"
+                  className="w-full rounded-lg bg-zinc-300/30 p-2 font-mono text-sm"
                   placeholder="enter OTP"
+                  onChange={(e) => setOtp(e.target.value)}
                 />
                 <button
                   className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-                  onClick={() => setSentOtp(true)}
+                  onClick={handleVerifyOtp}
                 >
                   Verify OTP
                 </button>
               </>
             ) : (
               <>
-                <input
-                  className="w-full rounded-lg bg-zinc-300/30 p-2"
-                  placeholder="enter your phone number"
-                />
+                <div className="relative w-full text-center font-mono text-sm">
+                  <div className="absolute  top-1/2 -translate-y-1/2 border-r border-r-black/20 px-2">
+                    +91
+                  </div>
+                  <input
+                    className="w-full rounded-lg bg-zinc-300/30 p-2 pl-12"
+                    placeholder="enter your phone number"
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
                 <button
                   className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-                  onClick={() => setSentOtp(true)}
+                  onClick={handleSendOtp}
                 >
                   Send OTP
                 </button>
