@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
 import { GeistSans, GeistMono } from "geist/font";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "VoteKero",
@@ -17,6 +19,7 @@ export default function RootLayout({
       <body
         className={`bg-background-50 font-sans text-text-900 ${GeistSans.variable} ${GeistMono.variable}`}
       >
+        <ToastContainer />
         {children}
       </body>
     </html>
