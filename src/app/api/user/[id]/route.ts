@@ -1,61 +1,29 @@
-import prisma from "../../../libs/prismadb";
 import { NextResponse } from "next/server";
+import { db } from "@/server/db";
 
-export const GET = async (request, { params }) => {
-    try{
-        const { id } = params;
-        const post: unknown = await prisma.user.findUnique({
-            where: {
-                id: Number(id)
-            }
-        });
-
-        if (!post) {
-            return NextResponse.json({message : "POST NOT FOUND"}, {status : 404});
-        }
-        return NextResponse.json(post);
-    }catch(err){
-        return NextResponse.json({message : "GET ERROR", err}, {status : 500})
+export const GET = async (request: Request) => {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+      return NextResponse.json(
+        { message: "PROVIDE VALID ID" },
+        { status: 400 },
+      );
     }
-}
 
-export const PATCH = async (request, { params }) => {
-    try{
-        const { id } = params;
-        const body: unknown = await request.json();
-        const { voterId, walletId, name } = body;
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+    });
 
-        const post: unknown = await prisma.user.update({
-            where: {
-                id: Number(id)
-            },
-            data: {
-                voterId : String(voterId),
-                walletId : String(walletId),
-                name: String(name)
-            }
-        });
-
-        if (!post) {
-            return NextResponse.json({message : "POST NOT FOUND"}, {status : 404});
-        }       
-
-        return NextResponse.json(post);
-    }catch(err){
-        return NextResponse.json({message : "PATCH ERROR", err}, {status : 500})
+    if (!user) {
+      return NextResponse.json({ message: "USER NOT FOUND" }, { status: 404 });
     }
-}
+    return NextResponse.json(user);
+  } catch (err) {
+    return NextResponse.json({ message: "GET ERROR", err }, { status: 500 });
+  }
+};
 
-export const DELETE = async (request, { params }) => {
-    try{
-        const { id } = params;
-        const post: unknown = await prisma.user.delete({
-            where: {
-                id: Number(id)
-            }
-        });
-        return NextResponse.json(post);
-    }catch(err){
-        return NextResponse.json({message : "DELETE ERROR", err}, {status : 500})
-    }
-}

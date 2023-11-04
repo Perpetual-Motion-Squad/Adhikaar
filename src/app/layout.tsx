@@ -1,4 +1,4 @@
-import "yarn/styles/globals.css";
+import "@/styles/globals.css";
 import { GeistSans, GeistMono } from "geist/font";
 
 export const metadata = {
