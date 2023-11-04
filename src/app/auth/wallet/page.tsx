@@ -1,3 +1,4 @@
+import Web3ModalButton from "@/app/components/Web3ModalButton";
 import React from "react";
 
 const WalletAuth = () => {
@@ -16,9 +17,7 @@ const WalletAuth = () => {
             <div className="text-3xl font-bold text-primary-500">
               Connect your wallet
             </div>
-            <button className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500">
-              Wallet Connect
-            </button>
+            <Web3ModalButton />
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
             1.

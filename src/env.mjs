@@ -28,7 +28,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_WEB3MODAL_PROJECT_ID: z.string(),
   },
 
   /**
@@ -38,6 +38,7 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_WEB3MODAL_PROJECT_ID: process.env.NEXT_PUBLIC_WEB3MODAL_PROJECT_ID,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
     TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
