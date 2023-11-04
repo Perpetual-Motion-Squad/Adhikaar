@@ -13,7 +13,7 @@ const Web3ModalButton = (props: Props) => {
   useEffect(() => {
     if (!isConnecting && !isDisconnected && address) {
       // If the user is connected, redirect to a different page
-      router.push("/auth/phone"); // Replace with the actual page URL
+      // router.push("/auth/phone"); // Replace with the actual page URL
     }
   }, [isConnecting, isDisconnected, address]);
 

@@ -4,16 +4,12 @@ async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
   const unlockTime = currentTimestampInSeconds + 60;
 
-  const lockedAmount = ethers.parseEther("0.001");
+  const adhikaar = await ethers.deployContract("Adhikaar", [], {});
 
-  const lock = await ethers.deployContract("Adhikaar", [unlockTime], { });
-
-  await lock.waitForDeployment();
+  await adhikaar.waitForDeployment();
 
   console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
+    `Adhikaar timestamp ${unlockTime} deployed to ${adhikaar.target}`
   );
 }
 

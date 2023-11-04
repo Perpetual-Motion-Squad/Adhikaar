@@ -9,8 +9,7 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start",
-    "sol:test": "cd blockchain && hardhat test"
+    "start": "next start"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.0",
