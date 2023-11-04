@@ -43,3 +43,5 @@ yarn-error.log*
 
 pnpm-lock.yaml
 yarn.lock
+
+!./blockchain/artifacts/contracts/Adhikaar.sol/Adhikaar.json
