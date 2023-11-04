@@ -12,9 +12,12 @@ const DashboardPage = async () => {
   const parties = await getParties();
 
   return (
-    <div className="h-screen w-full overflow-hidden">
-      <div className="w-full border-b border-b-black/20 p-5">
-        client logic here
+    <div className="h-screen w-full">
+      <div className="flex w-full items-center justify-between border-b border-b-black/20 p-5 font-sans text-lg font-medium">
+        Welcome, Dhruv Bakshi!
+        <button className="rounded-lg bg-accent-400 px-3 py-2 text-background-50 hover:bg-accent-500">
+          Logout
+        </button>
       </div>
       <div className="flex w-full justify-between">
         <PartyGrid parties={parties} />
