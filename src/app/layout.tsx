@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { GeistSans, GeistMono } from "geist/font";
+import Web3ProviderModal from "./components/Web3ProviderModal";
 
 export const metadata = {
   title: "VoteKero",
@@ -14,11 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`bg-background-50 font-sans text-text-900 ${GeistSans.variable} ${GeistMono.variable}`}
-      >
-        {children}
-      </body>
+      <Web3ProviderModal>
+        <body
+          className={`bg-background-50 font-sans text-text-900 ${GeistSans.variable} ${GeistMono.variable}`}
+        >
+          {children}
+        </body>
+      </Web3ProviderModal>
     </html>
   );
 }
