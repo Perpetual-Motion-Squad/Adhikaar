@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "bradlc.vscode-tailwindcss",
+        "nomicfoundation.hardhat-solidity",
+        "juanblanco.solidity"
+    ]
+}
