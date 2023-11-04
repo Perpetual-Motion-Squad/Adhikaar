@@ -9,7 +9,7 @@ export default function HomePage() {
           🎉 India’s most revolutionary voting system
         </div>
         <div className="mx-auto mt-4 text-center text-5xl font-bold text-primary-500">
-          VoteKero
+          Adhikaar
         </div>
         <div className="mx-auto w-3/5 text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
