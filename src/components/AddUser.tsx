@@ -17,11 +17,11 @@ const AddUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("/api/users", input)
+        axios.post("/api/user", input)
         .then((res) => {
             console.log(res);
         }).catch((err) => {
-            console.log(err);
+            console.log(err.response.data);
         }).finally(() => {
             setInput({});
             router.refresh();
