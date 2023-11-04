@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    const { voterId, walletId, name } = body;
+    const { voterId, walletId, name, phone } = body;
 
-    if (!voterId || !walletId || !name) {
+    if (!voterId || !walletId || !name || !phone) {
       return NextResponse.json(
         { message: "PROVIDE VALID PARAM" },
         { status: 400 },
@@ -18,6 +18,7 @@ export const POST = async (request: Request) => {
         voterId: String(voterId),
         walletId: String(walletId),
         name: String(name),
+        phone: String(phone),
       },
     });
     return NextResponse.json(user);
@@ -34,4 +35,3 @@ export const GET = async () => {
     return NextResponse.json({ message: "GET ERROR", err }, { status: 500 });
   }
 };
-
