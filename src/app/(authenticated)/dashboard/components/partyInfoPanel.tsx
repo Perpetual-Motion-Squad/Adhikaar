@@ -1,6 +1,6 @@
 "use client";
 
-import { useAdhikaarCanVote, useAdhikaarVote } from "@/components/useAdhikaar";
+import { useAdhikaarVote } from "@/components/useAdhikaar";
 import { stringToBytes32 } from "@/contract/utils";
 import { Party } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
@@ -13,8 +13,10 @@ const VoteButton = ({ id }: { id?: string }) => {
   useEffect(() => {
     if (status === "success") {
       toast.success("Voted successfully!");
+      localStorage.setItem("hasVoted", "true");
     } else if (status === "error") {
       toast.error("Error voting!");
+      localStorage.setItem("hasVoted", "true");
     } else if (status === "loading") {
       toast.info("Voting...");
     }
@@ -33,9 +35,13 @@ const VoteButton = ({ id }: { id?: string }) => {
 const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
   const [selectedParty, setSelectedParty] = useState<Party | null>(null);
   const searchParam = useSearchParams();
+  const [hasVoted, setHasVoted] = useState(true);
 
-  const { data, isSuccess } = useAdhikaarCanVote();
-  console.log(data);
+  useEffect(() => {
+    const temp = localStorage.getItem("hasVoted");
+    if (temp) setHasVoted(true);
+    else setHasVoted(false);
+  }, [localStorage.getItem("hasVoted")]);
 
   useEffect(() => {
     const id = searchParam.get("id");
@@ -56,7 +62,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             ? selectedParty.alias
             : "Select Party to see the details"}
         </div>
-        {selectedParty && isSuccess && <VoteButton id={selectedParty?.id} />}
+        {selectedParty && !hasVoted && <VoteButton id={selectedParty?.id} />}
       </div>
       {selectedParty ? (
         <img

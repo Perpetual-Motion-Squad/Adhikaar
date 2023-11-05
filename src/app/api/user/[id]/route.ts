@@ -16,6 +16,9 @@ export const GET = async (request: Request) => {
       where: {
         id,
       },
+      select: {
+        hasVoted: true,
+      },
     });
 
     if (!user) {
@@ -26,4 +29,3 @@ export const GET = async (request: Request) => {
     return NextResponse.json({ message: "GET ERROR", err }, { status: 500 });
   }
 };
-

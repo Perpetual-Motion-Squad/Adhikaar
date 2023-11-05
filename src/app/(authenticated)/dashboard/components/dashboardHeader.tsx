@@ -3,12 +3,17 @@ import Web3ModalButton from "@/app/components/Web3ModalButton";
 import { useAdhikaarCanVote } from "@/components/useAdhikaar";
 import authContext from "@/context/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const DashboardHeader = () => {
-  const { data, isError } = useAdhikaarCanVote();
   const { authStep } = useContext(authContext);
   const router = useRouter();
+  const [hasVoted, setHasVoted] = useState(false);
+  useEffect(() => {
+    const temp = localStorage.getItem("hasVoted");
+    if (temp) setHasVoted(true);
+    else setHasVoted(false);
+  }, [localStorage.getItem("hasVoted")]);
   useEffect(() => {
     if (authStep !== 3) {
       router.push("/auth/register");
@@ -18,7 +23,7 @@ const DashboardHeader = () => {
     <div className="flex items-center justify-between border-b border-b-black/20 p-5">
       <div className="text-lg font-medium">Welcome, Dhruv Bakshi</div>
       <div className="text-lg font-medium">
-        {isError && "Thanks for voting!"}
+        {hasVoted && "Thanks for voting!"}
       </div>
       <Web3ModalButton />
     </div>
