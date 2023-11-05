@@ -1,13 +1,24 @@
 "use client";
 
-import { useAdhikaarVote } from "@/components/useAdhikaar";
+import { useAdhikaarCanVote, useAdhikaarVote } from "@/components/useAdhikaar";
 import { stringToBytes32 } from "@/contract/utils";
 import { Party } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const VoteButton = ({ id }: { id?: string }) => {
-  const { write } = useAdhikaarVote();
+  const { write, status } = useAdhikaarVote();
+
+  useEffect(() => {
+    if (status === "success") {
+      toast.success("Voted successfully!");
+    } else if (status === "error") {
+      toast.error("Error voting!");
+    } else if (status === "loading") {
+      toast.info("Voting...");
+    }
+  }, [status]);
 
   return (
     <button
@@ -22,6 +33,10 @@ const VoteButton = ({ id }: { id?: string }) => {
 const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
   const [selectedParty, setSelectedParty] = useState<Party | null>(null);
   const searchParam = useSearchParams();
+
+  const { data, isSuccess } = useAdhikaarCanVote();
+  console.log(data, isSuccess);
+
   useEffect(() => {
     const id = searchParam.get("id");
     if (!id) setSelectedParty(null);
@@ -41,7 +56,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             ? selectedParty.alias
             : "Select Party to see the details"}
         </div>
-        <VoteButton id={selectedParty?.id} />
+        {selectedParty && <VoteButton id={selectedParty?.id} />}
       </div>
       {selectedParty ? (
         <img

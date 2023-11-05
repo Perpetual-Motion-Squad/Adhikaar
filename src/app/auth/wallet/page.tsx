@@ -1,7 +1,21 @@
+"use client";
 import Web3ModalButton from "@/app/components/Web3ModalButton";
-import React from "react";
+import React, { useEffect } from "react";
+import usePathHook from "../usePathHook";
+import { useAccount } from "wagmi";
 
+import { toast } from "react-toastify";
 const WalletAuth = () => {
+  const { status } = useAccount();
+  const updateStep = usePathHook();
+
+  useEffect(() => {
+    if (status === "connected") {
+      toast.success("Wallet connected");
+      updateStep(2);
+    }
+  }, [status]);
+
   return (
     <div className="flex">
       <img src="/images/wallet_connect_bg.jpg" className="h-screen" />
@@ -17,7 +31,7 @@ const WalletAuth = () => {
             <div className="text-3xl font-bold text-primary-500">
               Connect your wallet
             </div>
-            <Web3ModalButton callbackUrl="/auth/register" />
+            <Web3ModalButton />
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
             2.
