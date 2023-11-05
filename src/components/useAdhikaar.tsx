@@ -26,6 +26,7 @@ export function useAdhikaarPartyVotes(partyId: string) {
 }
 
 export function useAdhikaarVote(args: { partyId: string }) {
+  if (!args.partyId) return;
   return useContractWrite({
     abi,
     address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
@@ -75,4 +76,3 @@ export function useAdhikaarInitialize(args: { partyIds: string[] }) {
 
   return useContractWrite(config);
 }
-

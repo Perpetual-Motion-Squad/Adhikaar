@@ -1,11 +1,13 @@
 "use client";
 
+import { useAdhikaarVote } from "@/components/useAdhikaar";
 import { Party } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
   const [selectedParty, setSelectedParty] = useState<Party | null>(null);
+  const {} = useAdhikaarVote({ partyId: selectedParty?.id ?? "" });
   const searchParam = useSearchParams();
   useEffect(() => {
     const id = searchParam.get("id");
@@ -27,7 +29,10 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             : "Select Party to see the details"}
         </div>
         {selectedParty && (
-          <button className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500">
+          <button
+            className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
+            onClick={() => write?.()}
+          >
             Vote
           </button>
         )}

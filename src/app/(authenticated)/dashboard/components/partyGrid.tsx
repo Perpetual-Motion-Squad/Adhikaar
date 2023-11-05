@@ -8,7 +8,7 @@ const PartyGrid = ({ parties }: { parties: Party[] }) => {
   const [selectedParty, setSelectedParty] = useState<Party | null>(null);
   const router = useRouter();
   return (
-    <div className="h-[calc(100vh - 200px)] grid grid-cols-1 gap-5 overflow-y-hidden p-5 xl:grid-cols-2 2xl:grid-cols-3">
+    <div className="grid h-[500px] grid-cols-1 gap-5 overflow-y-scroll p-5 xl:grid-cols-2 2xl:grid-cols-3">
       {parties.map((party) => (
         <div
           className={`${
