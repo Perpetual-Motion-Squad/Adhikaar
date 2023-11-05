@@ -1,7 +1,9 @@
 "use client";
+import authContext from "@/context/authContext";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import usePathHook from "../usePathHook";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -49,7 +51,7 @@ const PhoneAuth = () => {
       toast.success("Login approved, Welcome!");
       (async () =>
         await sleep(3000).then(() => {
-          router.push("/dashboard");
+          router.push("/auth/wallet");
         }))();
     } else if (verficationStatus === "error") {
       toast.error("Login failed, please try again!");

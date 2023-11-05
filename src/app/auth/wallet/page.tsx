@@ -17,7 +17,7 @@ const WalletAuth = () => {
             <div className="text-3xl font-bold text-primary-500">
               Connect your wallet
             </div>
-            <Web3ModalButton />
+            <Web3ModalButton callbackUrl="/auth/register" />
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
             2.
