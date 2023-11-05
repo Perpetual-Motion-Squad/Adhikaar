@@ -6,11 +6,12 @@ import {
 } from "@/components/useAdhikaar";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import usePathHook from "../usePathHook";
 
 const Register = () => {
   const { write, isSuccess } = useAdhikaarRegisterVoter();
   const { data } = useAdhikaarCanVote();
-
+  const _ = usePathHook();
   console.log(data);
 
   const router = useRouter();
