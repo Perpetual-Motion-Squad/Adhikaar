@@ -1,17 +1,21 @@
 "use client";
 
-import { useAdhikaarVote } from "@/components/useAdhikaar";
+import { stringToBytes32, useAdhikaarVote } from "@/components/useAdhikaar";
 import { Party } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const VoteButton = (id: string) => {
-  const { write } = useAdhikaarVote({ partyId: id });
+const VoteButton = ({ id }: { id?: string }) => {
+  const { write } = useAdhikaarVote();
 
   return (
     <button
       className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-      onClick={() => write?.()}
+      onClick={() =>
+        write?.({
+          args: [stringToBytes32(id ?? "")],
+        })
+      }
     >
       Vote
     </button>
@@ -40,7 +44,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             ? selectedParty.alias
             : "Select Party to see the details"}
         </div>
-        {selectedParty && VoteButton(selectedParty.id)}
+        <VoteButton id={selectedParty?.id} />
       </div>
       {selectedParty ? (
         <img

@@ -16,15 +16,12 @@ export function useAdhikaarParties() {
   });
 }
 
-export function useAdhikaarVote(args: { partyId: string }) {
-  const { config } = usePrepareContractWrite({
+export function useAdhikaarVote() {
+  return useContractWrite({
     abi,
     address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     functionName: "vote",
-    args: [stringToBytes32(args.partyId)],
   });
-
-  return useContractWrite(config);
 }
 
 export function useAdhikaarRegisterVoter() {
