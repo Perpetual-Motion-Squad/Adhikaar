@@ -47,7 +47,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
     }
   }, [searchParam]);
   return (
-    <div className="h-[calc(100vh - 100px)] overflow-y-scroll p-5">
+    <div className="h-[600px] overflow-y-scroll p-5">
       <div
         className={`${selectedParty && "flex items-center justify-between"}`}
       >
