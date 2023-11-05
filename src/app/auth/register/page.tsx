@@ -1,10 +1,24 @@
 "use client";
 import Web3ModalButton from "@/app/components/Web3ModalButton";
-import { useAdhikaarRegisterVoter } from "@/components/useAdhikaar";
-import React from "react";
+import {
+  useAdhikaarCanVote,
+  useAdhikaarRegisterVoter,
+} from "@/components/useAdhikaar";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Register = () => {
-  const { writeAsync } = useAdhikaarRegisterVoter();
+  const { write, isSuccess } = useAdhikaarRegisterVoter();
+  const { data } = useAdhikaarCanVote();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isSuccess || data) {
+      // If the user is connected, redirect to a different page
+      router.push("/dashboard");
+    }
+  }, [isSuccess]);
   return (
     <div className="flex">
       <img src="/images/wallet_connect_bg.jpg" className="h-screen" />
@@ -22,7 +36,7 @@ const Register = () => {
             </div>
             <button
               className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-              onClick={() => writeAsync()}
+              onClick={() => write?.()}
             >
               Register
             </button>
