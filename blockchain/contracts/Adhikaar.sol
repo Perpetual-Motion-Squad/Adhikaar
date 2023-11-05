@@ -10,7 +10,13 @@ contract Adhikaar {
     uint256 votes;
   }
 
-  mapping(address => bool) public registeredVoters;
+  enum VoterStatus {
+    UNKNOWN,
+    REGISTERED,
+    VOTED
+  }
+
+  mapping(address => VoterStatus) public registeredVoters;
   address[] public voterList;
   mapping(bytes32 => Party) public parties;
   bytes32[] public partyNames;
@@ -43,23 +49,24 @@ contract Adhikaar {
     electionStarted = true;
   }
 
+  /** allow only if we are unknown */
   function registerVoter() public onlyDuringElection {
-    require(!registeredVoters[msg.sender], "You are already registered");
-    registeredVoters[msg.sender] = true;
+    require (registeredVoters[msg.sender] != VoterStatus.REGISTERED && registeredVoters[msg.sender] != VoterStatus.VOTED, "You are already registered");
+    registeredVoters[msg.sender] = VoterStatus.REGISTERED;
     voterList.push(msg.sender);
   }
 
-  function canVote() public view returns (bool) {
-    return electionStarted && registeredVoters[msg.sender];
+  function canVote() public onlyDuringElection view returns (bool) {
+    return registeredVoters[msg.sender] == VoterStatus.REGISTERED;
   }
 
   function vote(bytes32 _partyName) public onlyDuringElection {
-    require(registeredVoters[msg.sender], "You are not registered to vote");
+    require(registeredVoters[msg.sender] == VoterStatus.REGISTERED, "You are not registered to vote");
     require(electionStarted, "Election has not started yet");
     require(partyExists(_partyName), "Invalid party");
 
     parties[_partyName].votes++;
-    registeredVoters[msg.sender] = false;
+    registeredVoters[msg.sender] = VoterStatus.VOTED;
   }
 
   function endElection() public onlyOwner {
@@ -74,7 +81,7 @@ contract Adhikaar {
     }
     delete partyNames;
     for (uint256 i = 0; i < voterList.length; i++) {
-      registeredVoters[voterList[i]] = false;
+      registeredVoters[voterList[i]] = VoterStatus.UNKNOWN;
     }
     delete voterList;
   }
