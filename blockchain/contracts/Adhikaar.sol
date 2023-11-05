@@ -11,6 +11,7 @@ contract Adhikaar {
   }
 
   mapping(address => bool) public registeredVoters;
+  address[] public voterList;
   mapping(bytes32 => Party) public parties;
   bytes32[] public partyNames;
 
@@ -45,10 +46,11 @@ contract Adhikaar {
   function registerVoter() public onlyDuringElection {
     require(!registeredVoters[msg.sender], "You are already registered");
     registeredVoters[msg.sender] = true;
+    voterList.push(msg.sender);
   }
 
-  function isRegisteredVoter() public view returns (bool) {
-    return registeredVoters[msg.sender];
+  function canVote() public view returns (bool) {
+    return electionStarted && registeredVoters[msg.sender];
   }
 
   function vote(bytes32 _partyName) public onlyDuringElection {
@@ -70,7 +72,11 @@ contract Adhikaar {
     for (uint256 i = 0; i < partyNames.length; i++) {
       parties[partyNames[i]] = Party(partyNames[i], 0);
     }
-    partyNames = new bytes32[](0);
+    delete partyNames;
+    for (uint256 i = 0; i < voterList.length; i++) {
+      registeredVoters[voterList[i]] = false;
+    }
+    delete voterList;
   }
 
   function getPartyVotes(bytes32 _partyName) public view returns (uint256) {
@@ -93,5 +99,9 @@ contract Adhikaar {
 
   function partyExists(bytes32 _partyName) internal view returns (bool) {
     return parties[_partyName].id != bytes32(0);
+  }
+
+  function getRegisteredVotersCount() public view returns (uint256) {
+    return voterList.length;
   }
 }

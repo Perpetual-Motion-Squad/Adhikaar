@@ -68,4 +68,9 @@ describe("Adhikaar", function () {
     expect(await adhikaar.getPartyNamesCount()).to.equal(0);
     expect(await adhikaar.getPartyVotes(partyNames[0])).to.be.revertedWith('Invalid party')
   })
+
+  it("should revert if invalid user", async function () {
+    await adhikaar.connect(owner).initializeElection(partyNames);
+    expect(await adhikaar.connect(user1).canVote()).to.equal(false)
+  })
 });
