@@ -1,6 +1,3 @@
-import { useAdhikaarInitialize, useAdhikaarParties } from "@/components/useAdhikaar";
-import { use } from "react";
-import { partiesPromise } from "./data";
 import Bene from "./components/bene";
 import { db } from "@/server/db";
 

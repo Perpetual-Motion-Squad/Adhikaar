@@ -76,3 +76,14 @@ export function useAdhikaarInitialize(args: { partyIds: string[] }) {
 
   return useContractWrite(config);
 }
+
+
+export function useAdhikaarEndElection() {
+  const { config } = usePrepareContractWrite({
+    abi,
+    address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+    functionName: "endElection",
+  });
+
+  return useContractWrite(config);
+}
