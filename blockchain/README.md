@@ -1,13 +1,13 @@
-# Sample Hardhat Project
+# Adhikaar, Contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+The `Adhikaar` contract is a decentralized voting system.
+It is tested on the Polygon network.
 
-Try running some of the following tasks:
 
+## How to use
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+pnpm test                           # run tests on the contract
+pnpm test:local                     # run the blockchain node on localhost
+pnpm deploy:node                    # deploy on localhost
+pnpm deploy:polygon                 # deploy on polygon
 ```
