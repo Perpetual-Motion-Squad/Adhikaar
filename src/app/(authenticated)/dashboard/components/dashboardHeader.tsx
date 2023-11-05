@@ -1,10 +1,19 @@
 "use client";
 import Web3ModalButton from "@/app/components/Web3ModalButton";
 import { useAdhikaarCanVote } from "@/components/useAdhikaar";
+import authContext from "@/context/authContext";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect } from "react";
 
 const DashboardHeader = () => {
   const { data, isError } = useAdhikaarCanVote();
-  console.log(data, isError);
+  const { authStep } = useContext(authContext);
+  const router = useRouter();
+  useEffect(() => {
+    if (authStep !== 3) {
+      router.push("/auth/register");
+    }
+  }, [authStep]);
   return (
     <div className="flex items-center justify-between border-b border-b-black/20 p-5">
       <div className="text-lg font-medium">Welcome, Dhruv Bakshi</div>

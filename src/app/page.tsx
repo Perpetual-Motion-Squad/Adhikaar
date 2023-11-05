@@ -3,7 +3,7 @@ import Header from "./components/header";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="h-screen overflow-hidden">
       <Header />
       <div className="mx-auto mt-10 w-4/5">
         <div className="mx-auto w-fit rounded-sm bg-secondary px-2 py-1 font-mono text-sm">
@@ -24,10 +24,10 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
-      <div className="absolute bottom-0 left-1/2 h-[20vh] w-4/5 -translate-x-1/2 rounded-t-xl shadow-xl">
+      <div className="absolute bottom-0 left-1/2 h-[20vh] w-4/5 -translate-x-1/2 rounded-t-xl shadow-xl ">
         <img
           src="/images/banner_bg.png"
-          className="w-full bg-center object-cover"
+          className="h-full w-full bg-top object-cover"
         />
       </div>
     </div>

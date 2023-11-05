@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import usePathHook from "../usePathHook";
 // import usePathHook from "../usePathHook";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,12 +31,15 @@ const PhoneAuth = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
 
+  const updateStep = usePathHook();
+
   const [verficationStatus, setVerificationStatus] = useState<
     "pending" | "approved" | "error"
   >("pending");
 
   const handleSendOtp = async () => {
     setSentOtp(true);
+    toast.info("Sending OTP...");
     await sendOtp(phoneNumber);
     toast.success("OTP sent to your phone!");
   };
@@ -50,7 +54,8 @@ const PhoneAuth = () => {
     if (verficationStatus === "approved") {
       toast.success("Login approved, Welcome!");
       (async () =>
-        await sleep(3000).then(() => {
+        await sleep(2000).then(() => {
+          updateStep(1);
           router.push("/auth/wallet");
         }))();
     } else if (verficationStatus === "error") {

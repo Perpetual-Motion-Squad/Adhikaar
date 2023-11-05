@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "@/context/authProvider";
 
 export const metadata = {
-  title: "VoteKero",
+  title: "Adhikaar",
   description: "Made by Perpetual Motion Squad",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

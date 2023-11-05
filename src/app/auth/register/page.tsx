@@ -6,27 +6,35 @@ import {
 } from "@/components/useAdhikaar";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import usePathHook from "../usePathHook";
+import { toast } from "react-toastify";
 // import usePathHook from "../usePathHook";
 
 const Register = () => {
-  const { write, isSuccess } = useAdhikaarRegisterVoter();
+  const { write, isSuccess, isError } = useAdhikaarRegisterVoter();
   const {
     data,
     isSuccess: isAllowed,
-    isError,
+    isError: useCanVoteError,
     isLoading,
   } = useAdhikaarCanVote();
-  // const _ = usePathHook();
-  console.log(data);
 
   const router = useRouter();
+  const updateStep = usePathHook();
 
   useEffect(() => {
     if (isSuccess || data) {
       // If the user is connected, redirect to a different page
+      updateStep(3);
       router.push("/dashboard");
     }
   }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (useCanVoteError || isError) {
+      toast.error("You are not allowed to vote!");
+    }
+  }, [useCanVoteError, isError]);
 
   return (
     <div className="flex">
