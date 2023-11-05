@@ -18,17 +18,24 @@ const Bene = ({ parties }: { parties: Party[] }) => {
   const { write: writeEnd, isSuccess: isSuccessEnd } = useAdhikaarEndElection();
 
   return (
-    <div>
+    <div className="flex flex-col gap-5 items-center">
       <h1>Admin</h1>
-      <div>TODO: Add admin page</div>
       {data !== BigInt(0) && data?.toString()}
-      <button className="curosr-pointer rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500" disabled={!write} onClick={() => write?.()}>
+      <button
+        className="curosr-pointer rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500 w-fit"
+        disabled={!write}
+        onClick={() => write?.()}
+      >
         Initialize
       </button>
       {isLoading && <div>Loading...</div>}
       {isSuccess && <div>Success!</div>}
 
-      <button disabled={!writeEnd} onClick={() => writeEnd?.()}>
+      <button
+        className="curosr-pointer rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500 w-fit"
+        disabled={!writeEnd}
+        onClick={() => writeEnd?.()}
+      >
         End Election
       </button>
       {isSuccessEnd && <div>Success End!</div>}

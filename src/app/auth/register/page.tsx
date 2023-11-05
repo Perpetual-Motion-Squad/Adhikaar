@@ -1,5 +1,5 @@
 "use client";
-import Web3ModalButton from "@/app/components/Web3ModalButton";
+
 import {
   useAdhikaarCanVote,
   useAdhikaarRegisterVoter,
@@ -11,6 +11,8 @@ const Register = () => {
   const { write, isSuccess } = useAdhikaarRegisterVoter();
   const { data } = useAdhikaarCanVote();
 
+  console.log(data);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -18,7 +20,8 @@ const Register = () => {
       // If the user is connected, redirect to a different page
       router.push("/dashboard");
     }
-  }, [isSuccess]);
+  }, [isSuccess, data]);
+
   return (
     <div className="flex">
       <img src="/images/wallet_connect_bg.jpg" className="h-screen" />

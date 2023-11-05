@@ -1,7 +1,6 @@
 "use client";
 import Web3ModalButton from "@/app/components/Web3ModalButton";
 import { useAdhikaarCanVote } from "@/components/useAdhikaar";
-import React from "react";
 
 const DashboardHeader = () => {
   const { data, isError } = useAdhikaarCanVote();

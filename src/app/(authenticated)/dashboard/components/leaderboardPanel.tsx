@@ -1,6 +1,5 @@
 "use client";
 import { Party } from "@prisma/client";
-import { PieChart } from "react-minimal-pie-chart";
 
 const LeaderboardPanel = ({ parties }: { parties: Party[] }) => {
   console.log(parties);
