@@ -1,17 +1,17 @@
-'use client';
+import { useAdhikaarInitialize, useAdhikaarParties } from "@/components/useAdhikaar";
+import { use } from "react";
+import { partiesPromise } from "./data";
+import Bene from "./components/bene";
+import { db } from "@/server/db";
 
-import { useAdhikaarParties } from "@/components/useAdhikaar";
+const getParties = async () => {
+  const res = await db.party.findMany();
+  return res;
+};
 
-const Admin = () => {
-  const { data, isError, isLoading } = useAdhikaarParties();
-  console.log(data?.toString());
 
-  return (
-    <div>
-      <h1>Admin</h1>
-      <div>TODO: Add admin page</div>
-      {data !== BigInt(0) && data?.toString()}
-    </div>
-  )
+const Admin = async () => {
+  const parties = await getParties();
+  return <Bene parties={parties} />
 }
 export default Admin
