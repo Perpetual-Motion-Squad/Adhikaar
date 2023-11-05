@@ -1,4 +1,4 @@
-# Adhikaar: Decentralized Voting System on Polygon Blockchain
+# Adhikaar: Decentralized Voting System
 
 Adhikaar, a revolutionary project aimed at transforming the Indian voting system
 by leveraging the power of blockchain technology. Adhikaar, meaning 'right' in
