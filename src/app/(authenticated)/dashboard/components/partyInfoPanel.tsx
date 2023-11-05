@@ -3,17 +3,19 @@
 import { useAdhikaarVote } from "@/components/useAdhikaar";
 import { stringToBytes32 } from "@/contract/utils";
 import { Party } from "@prisma/client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const VoteButton = ({ id }: { id?: string }) => {
   const { write, status } = useAdhikaarVote();
 
+  const { refresh } = useRouter();
   useEffect(() => {
     if (status === "success") {
       toast.success("Voted successfully!");
       localStorage.setItem("hasVoted", "true");
+      refresh();
     } else if (status === "error") {
       toast.error("Error voting!");
       localStorage.setItem("hasVoted", "true");
