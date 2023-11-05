@@ -13,7 +13,7 @@ const DashboardHeader = () => {
     const temp = localStorage.getItem("hasVoted");
     if (temp) setHasVoted(true);
     else setHasVoted(false);
-  }, [localStorage.getItem("hasVoted")]);
+  }, []);
   useEffect(() => {
     if (authStep !== 3) {
       router.push("/auth/register");

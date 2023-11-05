@@ -41,7 +41,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
     const temp = localStorage.getItem("hasVoted");
     if (temp) setHasVoted(true);
     else setHasVoted(false);
-  }, [localStorage.getItem("hasVoted")]);
+  }, []);
 
   useEffect(() => {
     const id = searchParam.get("id");
