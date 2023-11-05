@@ -1,9 +1,9 @@
 "use client";
-import authContext from "@/context/authContext";
+// import authContext from "@/context/authContext";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import usePathHook from "../usePathHook";
+// import usePathHook from "../usePathHook";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
