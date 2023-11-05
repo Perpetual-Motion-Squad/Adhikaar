@@ -35,7 +35,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
   const searchParam = useSearchParams();
 
   const { data, isSuccess } = useAdhikaarCanVote();
-  console.log(data, isSuccess);
+  console.log(data);
 
   useEffect(() => {
     const id = searchParam.get("id");
@@ -56,7 +56,9 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             ? selectedParty.alias
             : "Select Party to see the details"}
         </div>
-        {selectedParty && <VoteButton id={selectedParty?.id} />}
+        {selectedParty && data && isSuccess && (
+          <VoteButton id={selectedParty?.id} />
+        )}
       </div>
       {selectedParty ? (
         <img
