@@ -208,9 +208,9 @@ const abi = [
     name: "registeredVoters",
     outputs: [
       {
-        internalType: "bool",
+        internalType: "enum Adhikaar.VoterStatus",
         name: "",
-        type: "bool",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
