@@ -56,9 +56,7 @@ const PartyInfoPanel = ({ parties }: { parties: Party[] }) => {
             ? selectedParty.alias
             : "Select Party to see the details"}
         </div>
-        {selectedParty && data && isSuccess && (
-          <VoteButton id={selectedParty?.id} />
-        )}
+        {selectedParty && isSuccess && <VoteButton id={selectedParty?.id} />}
       </div>
       {selectedParty ? (
         <img
