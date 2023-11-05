@@ -1,13 +1,22 @@
 "use client";
+import { useAdhikaarPartyVotes } from "@/components/useAdhikaar";
 import { Party } from "@prisma/client";
+
+const PartyInfo = ({ party, i }: { party: Party; i: number }) => {
+  const { data: votes } = useAdhikaarPartyVotes(party.id);
+  return (
+    <>
+      <span>
+        <span className="font-bold text-black/60">{i + 1}. </span>
+        <span className="font-bold text-black/60">{party.name}</span>
+      </span>
+      <span className="font-bold">{votes?.toString()}</span>
+    </>
+  );
+};
 
 const LeaderboardPanel = ({ parties }: { parties: Party[] }) => {
   console.log(parties);
-  const sortedPartyData = parties.map((p, key) => ({
-    id: p.id,
-    name: p.alias,
-    votes: key,
-  }));
 
   return (
     <div className="flex h-screen w-full flex-col">
@@ -16,22 +25,9 @@ const LeaderboardPanel = ({ parties }: { parties: Party[] }) => {
       </div>
       <div className="flex flex-col">
         <div className="flex w-full flex-col gap-2">
-          {sortedPartyData.map((party, i) => {
-            return (
-              <div
-                key={i}
-                className={`${
-                  i === 0 && "bg-secondary shadow"
-                } flex w-full justify-between rounded-lg p-2 text-xl`}
-              >
-                <span>
-                  <span className="font-bold text-black/60">{i + 1}. </span>
-                  <span className="font-bold text-black/60">{party.name}</span>
-                </span>
-                <span className="font-bold">{party.votes}</span>
-              </div>
-            );
-          })}
+          {parties.map((party, i) => (
+            <PartyInfo party={party} i={i} key={party.id} />
+          ))}
         </div>
       </div>
     </div>

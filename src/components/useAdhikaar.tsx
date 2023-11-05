@@ -7,6 +7,7 @@ import {
 } from "wagmi";
 import abi from "../contract/abi";
 import { env } from "@/env.mjs";
+import { stringToBytes32 } from "@/contract/utils";
 
 export function useAdhikaarParties() {
   return useContractRead({
@@ -40,21 +41,6 @@ export function useAdhikaarCanVote() {
   });
 }
 
-export function stringToBytes32(input: string) {
-  // Ensure the input string is not longer than 32 characters
-  if (input.length > 32) {
-    throw new Error("String length must be 32 characters or less");
-  }
-
-  // Pad the input string with null bytes to make it 32 bytes long
-  const paddedString = input.padEnd(32, "\0");
-
-  // Convert the padded string to a hexadecimal representation
-  const hexString = "0x" + Buffer.from(paddedString).toString("hex");
-
-  return hexString as `0x${string}`;
-}
-
 export function useAdhikaarInitialize(args: { partyIds: string[] }) {
   const { config } = usePrepareContractWrite({
     abi,
@@ -66,13 +52,19 @@ export function useAdhikaarInitialize(args: { partyIds: string[] }) {
   return useContractWrite(config);
 }
 
-
 export function useAdhikaarEndElection() {
-  const { config } = usePrepareContractWrite({
+  return useContractWrite({
     abi,
     address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     functionName: "endElection",
   });
+}
 
-  return useContractWrite(config);
+export function useAdhikaarPartyVotes(id: string) {
+  return useContractRead({
+    abi,
+    functionName: "getPartyVotes",
+    address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+    args: [stringToBytes32(id)],
+  });
 }
