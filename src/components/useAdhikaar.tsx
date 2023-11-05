@@ -3,7 +3,6 @@
 import {
   useContractRead,
   useContractWrite,
-  usePrepareContractWrite,
 } from "wagmi";
 import abi from "../contract/abi";
 import { env } from "@/env.mjs";
@@ -41,15 +40,12 @@ export function useAdhikaarCanVote() {
   });
 }
 
-export function useAdhikaarInitialize(args: { partyIds: string[] }) {
-  const { config } = usePrepareContractWrite({
+export function useAdhikaarInitialize() {
+  return useContractWrite({
     abi,
     address: env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     functionName: "initializeElection",
-    args: [args.partyIds.map(stringToBytes32)],
   });
-
-  return useContractWrite(config);
 }
 
 export function useAdhikaarEndElection() {
