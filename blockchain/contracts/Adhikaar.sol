@@ -47,17 +47,30 @@ contract Adhikaar {
     registeredVoters[msg.sender] = true;
   }
 
+  function isRegisteredVoter() public view returns (bool) {
+    return registeredVoters[msg.sender];
+  }
+
   function vote(bytes32 _partyName) public onlyDuringElection {
     require(registeredVoters[msg.sender], "You are not registered to vote");
     require(electionStarted, "Election has not started yet");
     require(partyExists(_partyName), "Invalid party");
 
     parties[_partyName].votes++;
+    registeredVoters[msg.sender] = false;
   }
 
   function endElection() public onlyOwner {
     require(electionStarted, "Election has not started yet");
     electionStarted = false;
+  }
+
+  function clearElection() public onlyOwner {
+    require(!electionStarted, "Election is still in progress");
+    for (uint256 i = 0; i < partyNames.length; i++) {
+      parties[partyNames[i]] = Party(partyNames[i], 0);
+    }
+    partyNames = new bytes32[](0);
   }
 
   function getPartyVotes(bytes32 _partyName) public view returns (uint256) {

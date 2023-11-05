@@ -21,7 +21,6 @@ describe("Adhikaar", function () {
     [owner, user1, user2] = await ethers.getSigners();
 
     adhikaar = await Adhikaar.deploy();
-    // await adhikaar.deployed();
   });
 
   it("should initialize the election with parties", async function () {
@@ -59,4 +58,14 @@ describe("Adhikaar", function () {
       adhikaar.connect(user1).vote(partyNames[0]),
     ).to.be.revertedWith("Election has not started yet");
   });
+
+  it("should clear all parties with no votes", async function () {
+    await adhikaar.connect(owner).initializeElection(partyNames);
+    await adhikaar.connect(user1).registerVoter();
+    await adhikaar.connect(user1).vote(partyNames[0]);
+    await adhikaar.connect(owner).endElection();
+    await adhikaar.connect(owner).clearElection();
+    expect(await adhikaar.getPartyNamesCount()).to.equal(0);
+    expect(await adhikaar.getPartyVotes(partyNames[0])).to.be.revertedWith('Invalid party')
+  })
 });
