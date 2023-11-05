@@ -10,7 +10,12 @@ import React, { useEffect } from "react";
 
 const Register = () => {
   const { write, isSuccess } = useAdhikaarRegisterVoter();
-  const { data } = useAdhikaarCanVote();
+  const {
+    data,
+    isSuccess: isAllowed,
+    isError,
+    isLoading,
+  } = useAdhikaarCanVote();
   // const _ = usePathHook();
   console.log(data);
 
@@ -38,12 +43,17 @@ const Register = () => {
             <div className="text-3xl font-bold text-primary-500">
               Register yourself as a Voter
             </div>
-            <button
-              className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-              onClick={() => write?.()}
-            >
-              Register
-            </button>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <button
+                className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
+                disabled={!write && data}
+                onClick={() => write?.()}
+              >
+                Register
+              </button>
+            )}
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
             3.

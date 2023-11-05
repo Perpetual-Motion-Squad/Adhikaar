@@ -46,6 +46,23 @@ describe("Adhikaar", function () {
     expect(await adhikaar.getPartyVotes(partyNames[1])).to.equal(1);
   });
 
+  it("Should not allow multiple registerations", async function () {
+    await adhikaar.connect(owner).initializeElection(partyNames);
+
+    // Register users
+    await adhikaar.connect(user1).registerVoter();
+
+    // Vote for PartyA from user1
+    await adhikaar.connect(user1).vote(partyNames[0]);
+
+    // Register again
+    await expect(adhikaar.connect(user1).registerVoter()).to.be.revertedWith(
+      "You are already registered"
+    );
+
+    expect(await adhikaar.connect(user1).canVote()).to.equal(false);
+  });
+
   it("should not allow voting before the election starts or after it ends", async function () {
     await adhikaar.connect(owner).initializeElection(partyNames);
 
@@ -55,7 +72,7 @@ describe("Adhikaar", function () {
     await adhikaar.connect(owner).endElection();
 
     await expect(
-      adhikaar.connect(user1).vote(partyNames[0]),
+      adhikaar.connect(user1).vote(partyNames[0])
     ).to.be.revertedWith("Election has not started yet");
   });
 
@@ -66,11 +83,13 @@ describe("Adhikaar", function () {
     await adhikaar.connect(owner).endElection();
     await adhikaar.connect(owner).clearElection();
     expect(await adhikaar.getPartyNamesCount()).to.equal(0);
-    expect(await adhikaar.getPartyVotes(partyNames[0])).to.be.revertedWith('Invalid party')
-  })
+    expect(await adhikaar.getPartyVotes(partyNames[0])).to.be.revertedWith(
+      "Invalid party"
+    );
+  });
 
   it("should revert if invalid user", async function () {
     await adhikaar.connect(owner).initializeElection(partyNames);
-    expect(await adhikaar.connect(user1).canVote()).to.equal(false)
-  })
+    expect(await adhikaar.connect(user1).canVote()).to.equal(false);
+  });
 });
