@@ -20,7 +20,7 @@ const WalletAuth = () => {
             <Web3ModalButton />
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
-            1.
+            2.
           </div>
         </div>
         <div className="w-full border-t border-t-black/20 px-5 py-2 font-mono text-sm">

@@ -3,17 +3,21 @@ import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
+import { useAdhikaarRegisterVoter } from "@/components/useAdhikaar";
 
 type Props = {};
 
 const Web3ModalButton = (props: Props) => {
   const { address, isConnecting, isDisconnected } = useAccount();
   const router = useRouter();
-
+  const { writeAsync } = useAdhikaarRegisterVoter();
   useEffect(() => {
     if (!isConnecting && !isDisconnected && address) {
       // If the user is connected, redirect to a different page
       // router.push("/auth/phone"); // Replace with the actual page URL
+      writeAsync().then(() => {
+        router.push("/dashboard");
+      });
     }
   }, [isConnecting, isDisconnected, address]);
 
