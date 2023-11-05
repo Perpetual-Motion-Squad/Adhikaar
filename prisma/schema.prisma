@@ -24,6 +24,7 @@ model Party {
   logo    String
   members Json[]
   slogan  String
+  alias   String
 }
 
 // member -> {name, position}

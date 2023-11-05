@@ -4,16 +4,17 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 
-type Props = {};
+type Props = {
+  callbackUrl?: string
+};
 
 const Web3ModalButton = (props: Props) => {
-  const { address, isConnecting, isDisconnected } = useAccount();
+  const { address, isConnecting, isDisconnected,  } = useAccount();
   const router = useRouter();
-
   useEffect(() => {
     if (!isConnecting && !isDisconnected && address) {
       // If the user is connected, redirect to a different page
-      // router.push("/auth/phone"); // Replace with the actual page URL
+      props.callbackUrl && router.push(props.callbackUrl);
     }
   }, [isConnecting, isDisconnected, address]);
 

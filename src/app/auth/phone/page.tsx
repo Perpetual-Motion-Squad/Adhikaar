@@ -109,7 +109,7 @@ const PhoneAuth = () => {
             )}
           </div>
           <div className="absolute bottom-0 right-10 text-[300px] leading-[300px] opacity-10">
-            2.
+            1.
           </div>
         </div>
         <div className="w-full border-t border-t-black/20 px-5 py-2 font-mono text-sm">
