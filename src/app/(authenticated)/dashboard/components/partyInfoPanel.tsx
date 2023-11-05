@@ -1,6 +1,7 @@
 "use client";
 
-import { stringToBytes32, useAdhikaarVote } from "@/components/useAdhikaar";
+import { useAdhikaarVote } from "@/components/useAdhikaar";
+import { stringToBytes32 } from "@/contract/utils";
 import { Party } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,11 +12,7 @@ const VoteButton = ({ id }: { id?: string }) => {
   return (
     <button
       className="rounded-lg bg-accent-600 px-3 py-2 text-background-50 hover:bg-accent-500"
-      onClick={() =>
-        write?.({
-          args: [stringToBytes32(id ?? "")],
-        })
-      }
+      onClick={() => write?.({ args: [stringToBytes32(id ?? "")] })}
     >
       Vote
     </button>

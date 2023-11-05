@@ -6,9 +6,8 @@ const getParties = async () => {
   return res;
 };
 
-
 const Admin = async () => {
   const parties = await getParties();
-  return <Bene parties={parties} />
-}
-export default Admin
+  return <Bene parties={parties} />;
+};
+export default Admin;
